@@ -10,12 +10,12 @@ public class HomeController {
 
     @GetMapping("/register")
     public String registerPage() {
-        return "/static/register"; // Assuming you have a register.html in src/main/resources/templates
+        return "register"; // Assuming you have a register.html in src/main/resources/templates
     }
 
     @GetMapping("/logout")
     public String logoutPage() {
-        return "/static/logout"; // Assuming you have a logout.html in src/main/resources/templates
+        return "logout"; // Assuming you have a logout.html in src/main/resources/templates
     }
 }
 

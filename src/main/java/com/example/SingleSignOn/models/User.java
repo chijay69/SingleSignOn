@@ -1,15 +1,18 @@
 package com.example.SingleSignOn.models;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
-import java.util.Collections;
-//import javax.persistence.Entity;
-//import javax.persistence.Id;
+
+
+// import javax.persistence.Entity;
+// import javax.persistence.Id;
 
 
 @Builder
@@ -17,18 +20,19 @@ import java.util.Collections;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "\"user\"", indexes = {@Index(name = "idx_user_name", columnList = "userName")})
+@Table(name = "\"user\"", indexes = {@Index(name = "idx_username", columnList = "username")})
 public class User implements UserDetails {
     @SequenceGenerator(
-            name = "user_sequence",
-            sequenceName = "user_sequence",
+            name = "user_id_auto",
+            sequenceName = "user_id_auto",
             allocationSize = 1
     )
     @Id
     @GeneratedValue(
-            strategy = GenerationType.SEQUENCE,
-            generator = "user_sequence"
+            strategy = GenerationType.AUTO,
+            generator = "user_id_auto"
     )
+    private Long id;
     private String username;
     private String firstname;
     private String lastname;
@@ -39,11 +43,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-//    @Override
-//    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        SimpleGrantedAuthority authority = new SimpleGrantedAuthority(role.name());
-//        return Collections.singletonList(authority);
-//    }
     @Override
     public Collection<?extends GrantedAuthority> getAuthorities () {
         return role.grantedAuthorities();

@@ -1,30 +1,26 @@
 package com.example.SingleSignOn.service;
 
-import com.example.SingleSignOn.models.requests.ChangePasswordRequest;
-import com.example.SingleSignOn.models.requests.RegisterRequest;
 import com.example.SingleSignOn.models.Role;
 import com.example.SingleSignOn.models.User;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.example.SingleSignOn.models.requests.RegisterRequest;
 
 import java.security.Principal;
 import java.util.List;
+import java.util.Optional;
 
-public interface UserService extends UserDetailsService {
+public interface UserService {
 
-    User getUserByEmail(String email);
+    Optional<User> findByEmail(String email);
 
-    List<User> getAllUsers();
-
-    User registerUser(RegisterRequest userRequest) throws IllegalAccessException;
-
-    List<User> getUsersByRole(Role role);
-
-    User updateUser(Principal principal, String targetUserName, RegisterRequest updateUserRequest);
-
-    void changeUserPassword(Principal connectedUser, ChangePasswordRequest newPasswordRequest);
+    List<User> findAllByRole(Role role);
 
     void deleteUser(String email);
 
-    int enableUser(String userName);
+    User updateUser(Principal principal, String targetEmail, RegisterRequest updateUserRequest);
 
+    boolean isAdmin(String userEmail);
+
+    User registerUser(RegisterRequest userRequest);
+
+    List<User> getAllUsers();
 }

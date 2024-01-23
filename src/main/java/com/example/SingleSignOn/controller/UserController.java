@@ -27,7 +27,7 @@ public class UserController {
 
     @GetMapping("/{email}")
     public User getUserByEmail(@PathVariable String email) {
-        return userService.getUserByEmail(email);
+        return userService.findByEmail(email).get();
     }
 
     @GetMapping("/all")
@@ -42,14 +42,14 @@ public class UserController {
     }
 
     @PutMapping("/{targetUserName}")
-    public ResponseEntity<User> updateUser(
+    public ResponseEntity<HttpStatus> updateUser(
             Principal principal,
-            @PathVariable String targetUserName,
+            @PathVariable String targetEmail,
             @RequestBody RegisterRequest updateUserRequest) {
 
         try {
-            User updatedUser = userService.updateUser(principal, targetUserName, updateUserRequest);
-            return ResponseEntity.ok(updatedUser);
+            User updatedUser = userService.updateUser(principal, targetEmail, updateUserRequest);
+            return ResponseEntity.ok(HttpStatus.CREATED);
         } catch (AccessDeniedException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
         } catch (UsernameNotFoundException e) {
@@ -65,6 +65,6 @@ public class UserController {
 
     @GetMapping("/by-role/{role}")
     public List<User> getUsersByRole(@PathVariable Role role) {
-        return userService.getUsersByRole(role);
+        return userService.findAllByRole(role);
     }
 }

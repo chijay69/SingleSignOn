@@ -18,9 +18,9 @@ public class UserConverter {
         // Assuming User has a copy constructor, if not, you can manually create a new User instance
         User newUser = new User();
         newUser.setEmail(user.getEmail());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
-        newUser.setUserName(user.getUsername());
+        newUser.setFirstname(user.getFirstname());
+        newUser.setLastname(user.getLastname());
+        newUser.setUsername(user.getUsername());
         newUser.setPassword(user.getPassword());
         newUser.setRole(user.getRole());
         newUser.setEnabled(user.getEnabled());
