@@ -8,6 +8,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import static com.example.SingleSignOn.models.Role.ADMIN;
+import static com.example.SingleSignOn.models.Role.USER;
 
 @SpringBootApplication
 public class SingleSignOnApplication {
@@ -24,11 +25,25 @@ public class SingleSignOnApplication {
 			var admin = RegisterRequest.builder()
 					.firstname("Admin")
 					.lastname("Admin")
+					.username("admin")
 					.email("admin@mail.com")
 					.password("password")
+					.locked(false)
+					.enabled(true)
 					.role(ADMIN)
 					.build();
 			System.out.println("Admin token: " + service.registerUser(admin));
+			var user = RegisterRequest.builder()
+					.firstname("User")
+					.lastname("User")
+					.username("user")
+					.email("user@mail.com")
+					.password("password")
+					.locked(false)
+					.enabled(true)
+					.role(USER)
+					.build();
+			System.out.println("User token: " + service.registerUser(user));
 
 		};
 	}

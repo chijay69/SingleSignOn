@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap">
+
+    <title>Login Page</title>
+    <style>
+        body {
+            width:100%;
+            margin: auto;
+        }
+        .section-body {
+            background-color: rgba(255, 255, 255, 0);
+            font-family: 'Lato', sans-serif;
+            width:80%;
+            margin: auto;
+        }
+        .registration-container {
+            background-color: #fff;
+            width:100%;
+            margin:auto;
+        }
+        .dark-gold-bg {
+            background-color: #d4af37; /* Dark gold color */
+            color: #fff; /* Text color for contrast */
+        }
+        .custom-rounded {
+            border-radius: 15px;
+        }
+        .empty-square {
+            background-image: url('https://images.unsplash.com/photo-1676804957763-0512ecd30795?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+            /* Cover the entire viewport */
+            background-size: cover;
+            /* No repeat */
+            background-repeat: no-repeat;
+            /* Center the background */
+            background-position: center;
+            /* Fix the background while scrolling */
+            background-attachment: fixed;
+            flex: 1;
+            z-index: 1;
+            min-height: 200px; /* Set a minimum height */
+        }
+        .registration-page {
+            background-color: #fff;
+            position: relative;
+            z-index: 3;
+        }
+        .registration-form {
+            padding: 20px;
+        }
+        .header {
+            align-items: center;
+            text-align: center;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .subheader {
+            align-items: center;
+            text-align: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.2rem;
+            margin-bottom: 35px;
+            color: #333; /* Subdued color for subheaders */
+        }
+    </style>
+</head>
+<body style="background-image: url('https://images.unsplash.com/photo-1676804957763-0512ecd30795?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')">
+<section class="section-body">
+    <div class="container m-4 custom-rounded registration-container">
+        <div th:if="${error}">
+            <div class="alert alert-danger" role="alert">
+                [[${error}]]
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 d-flex flex-column custom-rounded">
+                <div class="empty-square m-4 p-3 flex-fill custom-rounded">
+                    <!--                    <h2 class="text-center">HELLO</h2>-->
+                </div>
+            </div>
+            <div class="col-md-6 flex-column custom-rounded">
+                <div class="registration-page mt-4 mb-4 p-3 flex-fill custom-rounded">
+                    <h1 class="header">LOGIN</h1>
+                    <h4 class="subheader">Welcome Back</h4>
+                    <form action="/login" method="post" class="row g-3">
+                        <div class="col-12 mb-3">
+                            <label for="email" class="form-label">Email:</label>
+                            <input type="text" id="email" name="email" class="form-control" required>
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="password" class="form-label">Password:</label>
+                            <input type="password" id="password" name="password" class="form-control" required>
+                            <div id="passwordHelpBlock" class="form-text">
+                                Your password must be 8-20 characters long, contain letters and numbers, and must not contain spaces, special characters, or emoji.
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3 m-2">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <button type="submit" formaction="/login" class="btn btn-primary dark-gold-bg">Login</button>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <p class="mt-2">Forgot Password?</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

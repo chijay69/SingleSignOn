@@ -2,7 +2,9 @@ package com.example.SingleSignOn.service;
 
 import com.example.SingleSignOn.models.Role;
 import com.example.SingleSignOn.models.User;
+import com.example.SingleSignOn.models.requests.AuthenticationRequest;
 import com.example.SingleSignOn.models.requests.RegisterRequest;
+import org.springframework.security.core.Authentication;
 
 import java.security.Principal;
 import java.util.List;
@@ -23,4 +25,6 @@ public interface UserService {
     User registerUser(RegisterRequest userRequest);
 
     List<User> getAllUsers();
+
+    Authentication authenticateUser(AuthenticationRequest authenticationRequest);
 }
