@@ -13,7 +13,7 @@ public class AdminController {
     @GetMapping("/dashboard")
     @PreAuthorize("hasAuthority('admin:read')")
     public String adminDashboard() {
-        return "admin/dashboard"; // Create the corresponding admin/dashboard.jsp or admin/dashboard.html
+        return "dashboard"; // Create the corresponding admin/dashboard.jsp or admin/dashboard.html
     }
 
     @GetMapping("/manage-users")

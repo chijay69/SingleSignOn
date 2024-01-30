@@ -3,10 +3,18 @@ package com.example.SingleSignOn.service;
 import com.example.SingleSignOn.converter.UserConverter;
 import com.example.SingleSignOn.models.Role;
 import com.example.SingleSignOn.models.User;
+import com.example.SingleSignOn.models.requests.AuthenticationRequest;
 import com.example.SingleSignOn.models.requests.RegisterRequest;
 import com.example.SingleSignOn.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,10 +26,12 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
     private final BCryptPasswordEncoder passwordEncoder;
+    private final AuthenticationManager authenticationManager;
 
     @Override
     public Optional<User> findByEmail(String email) {
@@ -112,6 +122,8 @@ public class UserServiceImpl implements UserService {
                 .email(userEmail)
                 .role(userRequest.getRole())
                 .username(userRequest.getUsername())
+                .enabled(userRequest.getEnabled())
+                .locked(userRequest.getLocked())
                 // You should encode the password before saving it to the database
                 .password(passwordEncoder.encode(userRequest.getPassword()))
                 .build();
@@ -122,6 +134,28 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers(){
         return userRepository.findAll();
+    }
+
+
+    @Override
+    public Authentication authenticateUser(AuthenticationRequest authenticationRequest) {
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            authenticationRequest.getEmail(), authenticationRequest.getPassword()));
+
+            if (authentication.isAuthenticated()) {
+                SecurityContextHolder.getContext().setAuthentication(authentication);
+                log.info("User authenticated successfully: {}", authentication.getName());
+                return authentication;
+            } else {
+                log.error("Authentication failed for user: {}", authentication.getName());
+                throw new BadCredentialsException("Authentication failed");
+            }
+        } catch (AuthenticationException e) {
+            log.error("Authentication exception: {}", e.getMessage());
+            throw new BadCredentialsException("Invalid username or password");
+        }
     }
 
 }
