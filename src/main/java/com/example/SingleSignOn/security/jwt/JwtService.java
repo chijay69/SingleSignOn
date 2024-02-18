@@ -1,6 +1,5 @@
 package com.example.SingleSignOn.security.jwt;
 
-<<<<<<< HEAD
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -93,7 +92,4 @@ public class JwtService {
         byte[] keyBytes = Decoders.BASE64.decode(secretKey);
         return Keys.hmacShaKeyFor(keyBytes);
     }
-=======
-public class JwtService {
->>>>>>> origin/main
 }
