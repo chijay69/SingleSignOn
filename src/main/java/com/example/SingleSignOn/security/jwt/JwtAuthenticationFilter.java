@@ -33,10 +33,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
